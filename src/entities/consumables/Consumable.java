@@ -2,7 +2,7 @@ package entities.consumables;
 
 import entities.Pickup;
 
-public class Consumable extends Pickup {
+public abstract class Consumable extends Pickup {
     boolean consumed;
 
     public Consumable(String description) {
