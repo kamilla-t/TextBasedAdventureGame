@@ -29,16 +29,19 @@ public class World {
         while (gameInProgress) {
             switch (this.mode) {
                 case explore:
-                    //processExploreUserInput();
+                    processExploreUserInput();
                     break;
                 case battle:
-                    //processBattleUserInput();
+                    processBattleUserInput();
                     break;
             }
-
         }
     }
-    //--------------------------------------------------------
 
-    //--------------------------------------------------------
+    private void processExploreUserInput(){
+
+    }
+    private void processBattleUserInput(){
+
+    }
 }
