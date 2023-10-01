@@ -1,7 +1,5 @@
 package gameplay;
 
-import gameplay.World;
-
 public class ReadWorldDataFile
 {
 
@@ -17,5 +15,9 @@ public class ReadWorldDataFile
         return null;
     }
 
-
+    public static World oneRoomWorld()
+    {
+        Room room = new Room();
+        return new World(room);
+    }
 }

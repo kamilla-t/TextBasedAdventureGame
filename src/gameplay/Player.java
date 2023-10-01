@@ -1,6 +1,8 @@
 package gameplay;
 
 import entities.Character;
+import entities.Pickup;
+import entities.consumables.valuables.Valuable;
 import entities.wieldables.Wieldable;
 
 public class Player extends Character
@@ -64,5 +66,9 @@ public class Player extends Character
         this.setCurrentHealthPoints(newHealth);
         this.setConfidencePoints(newConfidence);
         return d;
+    }
+
+    public void admire(Valuable foundItem) {
+        this.confidencePoints += foundItem.getValue();
     }
 }
