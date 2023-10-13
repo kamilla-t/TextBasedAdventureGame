@@ -1,0 +1,21 @@
+Room
+Monster healthPoints, randomChancetoAppear,
+Treasure randomChancetoAppear
+Food randomChancetoAppear
+
+
+Connections
+//ID
+1-2
+
+
+Room1
+Zombie 0.15, 2.5
+Coins 2.5
+Mead 1.5
+
+Room2...
+
+Connections
+1 - 2
+2 - 3
