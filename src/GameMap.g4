@@ -22,7 +22,7 @@ FOOD: 'INT' 'ID' NEWLINE;
 // Lexer rules
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 WS: [ \t\r\n]+ -> skip;
-NEWLINE: [\r\n]+ ;
+NEWLINE:'\r'? '\n' ;
 INT: ('0' | [1-9] [0-9]*);
 FLOAT: ('0' | [1-9] [0-9]*) '.' [0-9]+;
 
