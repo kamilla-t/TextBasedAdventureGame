@@ -1,7 +1,7 @@
 package entities.consumables.valuables;
 
 public class Jewel extends Valuable{
-    public Jewel(String description, int value) {
-        super(description, value);
+    public Jewel() {
+        super("Jewel", 100);
     }
 }
