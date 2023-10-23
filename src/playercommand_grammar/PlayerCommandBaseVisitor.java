@@ -1,4 +1,4 @@
-// Generated from /Users/kjohnson/Archive/Teaching/2023-Teaching/COMP711/Assessments/Software Project/TextGameEngine/TextGameEngine/src/PlayerCommand.g4 by ANTLR 4.12.0
+// Generated from C:/main/study/Theory of Computation/projects/TextBasedAdventureGame/src/PlayerCommand.g4 by ANTLR 4.13.1
 package playercommand_grammar;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -19,4 +19,11 @@ public class PlayerCommandBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitCommand(PlayerCommandParser.CommandContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAction(PlayerCommandParser.ActionContext ctx) { return visitChildren(ctx); }
 }

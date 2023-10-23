@@ -1,20 +1,17 @@
-Room
-Monster healthPoints, randomChancetoAppear,
-Treasure randomChancetoAppear
-Food randomChancetoAppear
-
-
-Connections
-//ID
-1-2
-
-
 Room1
-Zombie 0.15, 2.5
-Coins 2.5
-Mead 1.5
+"Shrek", 30, 10, 5
+"Coin", 1
+"Bread", 10
 
-Room2...
+Room2
+"Dragon", 100, 5, 20
+"Jewel", 100
+"Mead", 15
+
+Room3
+"Zombie", 10, 50, 2
+"GoldBar", 10
+"Roast boar", 40
 
 Connections
 1 - 2

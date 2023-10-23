@@ -1,4 +1,4 @@
-// Generated from /Users/kjohnson/Archive/Teaching/2023-Teaching/COMP711/Assessments/Software Project/TextGameEngine/TextGameEngine/src/PlayerCommand.g4 by ANTLR 4.12.0
+// Generated from C:/main/study/Theory of Computation/projects/TextBasedAdventureGame/src/PlayerCommand.g4 by ANTLR 4.13.1
 package playercommand_grammar;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -24,6 +24,18 @@ public class PlayerCommandBaseListener implements PlayerCommandListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCommand(PlayerCommandParser.CommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAction(PlayerCommandParser.ActionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAction(PlayerCommandParser.ActionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

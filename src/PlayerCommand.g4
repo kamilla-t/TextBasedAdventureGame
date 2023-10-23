@@ -4,24 +4,22 @@ grammar PlayerCommand;
 command: action NEWLINE;
 
 action:
-    | 'pickup ' ID
     | 'door n' ID
     | 'pickup item' ID
-    | 'exit' ID
-    | 'describe' ID
+    | 'describe'
     | 'admire valuable' ID
     | 'eat food' ID
-    | 'stats' ID
+    | 'stats'
     | 'wield weapon' ID
-    | 'wield fistsoffury' ID
     | 'open chest' ID
-    | 'help' ID
-    | 'attack'ID
+    | 'help'
+    | 'attack'
     ;
 
 
 // Lexer rules
-ID: [a-zA-Z_][a-zA-Z0-9_]*;
+//ID: [a-zA-Z_][a-zA-Z0-9_]*;
+ID: [a-zA-Z]+;// identifier rule
 NEWLINE:'\r'? '\n' ; // return newlines to parser (is end-statement signal)
 
 //antlr4 PlayerCommand.g4
