@@ -17,32 +17,28 @@ public class GameMapParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, Connections=13, ROOM=14, MONSTER=15, VALUABLES=16, 
-		FOOD=17, ID=18, WS=19, NEWLINE=20, INT=21, FLOAT=22;
+		T__0=1, T__1=2, ROOMID=3, MONSTER=4, VALUABLES=5, WIELDABLE=6, OPENABLE=7, 
+		FOOD=8, WHITESPACE=9, NEWLINE=10, ID=11, INT=12, BOOL=13;
 	public static final int
 		RULE_gamemap = 0, RULE_room = 1, RULE_attr = 2, RULE_connections = 3, 
-		RULE_command = 4, RULE_action = 5;
+		RULE_connection = 4;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"gamemap", "room", "attr", "connections", "command", "action"
+			"gamemap", "room", "attr", "connections", "connection"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'pickup '", "'door n'", "'pickup item'", "'describe'", "'admire valuable'", 
-			"'eat food'", "'stats'", "'wield weapon'", "'wield fistsoffury'", "'open chest'", 
-			"'help'", "'attack'"
+			null, "'Connections'", "'-'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "Connections", "ROOM", "MONSTER", "VALUABLES", "FOOD", "ID", "WS", 
-			"NEWLINE", "INT", "FLOAT"
+			null, null, null, "ROOMID", "MONSTER", "VALUABLES", "WIELDABLE", "OPENABLE", 
+			"FOOD", "WHITESPACE", "NEWLINE", "ID", "INT", "BOOL"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -133,26 +129,26 @@ public class GameMapParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(15);
+			setState(11); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==ROOM) {
+			do {
 				{
 				{
-				setState(12);
+				setState(10);
 				room();
 				}
 				}
-				setState(17);
+				setState(13); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
-			setState(19);
+			} while ( _la==ROOMID );
+			setState(16);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==Connections) {
+			if (_la==T__0) {
 				{
-				setState(18);
+				setState(15);
 				connections();
 				}
 			}
@@ -172,9 +168,11 @@ public class GameMapParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class RoomContext extends ParserRuleContext {
-		public TerminalNode ROOM() { return getToken(GameMapParser.ROOM, 0); }
-		public TerminalNode ID() { return getToken(GameMapParser.ID, 0); }
-		public TerminalNode NEWLINE() { return getToken(GameMapParser.NEWLINE, 0); }
+		public TerminalNode ROOMID() { return getToken(GameMapParser.ROOMID, 0); }
+		public List<TerminalNode> NEWLINE() { return getTokens(GameMapParser.NEWLINE); }
+		public TerminalNode NEWLINE(int i) {
+			return getToken(GameMapParser.NEWLINE, i);
+		}
 		public List<AttrContext> attr() {
 			return getRuleContexts(AttrContext.class);
 		}
@@ -207,26 +205,26 @@ public class GameMapParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(21);
-			match(ROOM);
-			setState(22);
-			match(ID);
-			setState(23);
+			setState(18);
+			match(ROOMID);
+			setState(19);
 			match(NEWLINE);
-			setState(25); 
+			setState(21); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(24);
+				setState(20);
 				attr();
 				}
 				}
-				setState(27); 
+				setState(23); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 229376L) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 496L) != 0) );
+			setState(25);
+			match(NEWLINE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -246,6 +244,8 @@ public class GameMapParser extends Parser {
 		public TerminalNode NEWLINE() { return getToken(GameMapParser.NEWLINE, 0); }
 		public TerminalNode VALUABLES() { return getToken(GameMapParser.VALUABLES, 0); }
 		public TerminalNode FOOD() { return getToken(GameMapParser.FOOD, 0); }
+		public TerminalNode WIELDABLE() { return getToken(GameMapParser.WIELDABLE, 0); }
+		public TerminalNode OPENABLE() { return getToken(GameMapParser.OPENABLE, 0); }
 		public AttrContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -269,33 +269,51 @@ public class GameMapParser extends Parser {
 		AttrContext _localctx = new AttrContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_attr);
 		try {
-			setState(35);
+			setState(37);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case MONSTER:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(29);
+				setState(27);
 				match(MONSTER);
-				setState(30);
+				setState(28);
 				match(NEWLINE);
 				}
 				break;
 			case VALUABLES:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(31);
+				setState(29);
 				match(VALUABLES);
-				setState(32);
+				setState(30);
 				match(NEWLINE);
 				}
 				break;
 			case FOOD:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(33);
+				setState(31);
 				match(FOOD);
+				setState(32);
+				match(NEWLINE);
+				}
+				break;
+			case WIELDABLE:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(33);
+				match(WIELDABLE);
 				setState(34);
+				match(NEWLINE);
+				}
+				break;
+			case OPENABLE:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(35);
+				match(OPENABLE);
+				setState(36);
 				match(NEWLINE);
 				}
 				break;
@@ -316,10 +334,12 @@ public class GameMapParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ConnectionsContext extends ParserRuleContext {
-		public TerminalNode Connections() { return getToken(GameMapParser.Connections, 0); }
 		public TerminalNode NEWLINE() { return getToken(GameMapParser.NEWLINE, 0); }
-		public ConnectionsContext connections() {
-			return getRuleContext(ConnectionsContext.class,0);
+		public List<ConnectionContext> connection() {
+			return getRuleContexts(ConnectionContext.class);
+		}
+		public ConnectionContext connection(int i) {
+			return getRuleContext(ConnectionContext.class,i);
 		}
 		public ConnectionsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -343,15 +363,28 @@ public class GameMapParser extends Parser {
 	public final ConnectionsContext connections() throws RecognitionException {
 		ConnectionsContext _localctx = new ConnectionsContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_connections);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
-			match(Connections);
-			setState(38);
-			match(NEWLINE);
 			setState(39);
-			connections();
+			match(T__0);
+			setState(40);
+			match(NEWLINE);
+			setState(42); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(41);
+				connection();
+				}
+				}
+				setState(44); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==INT );
 			}
 		}
 		catch (RecognitionException re) {
@@ -366,197 +399,45 @@ public class GameMapParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class CommandContext extends ParserRuleContext {
-		public ActionContext action() {
-			return getRuleContext(ActionContext.class,0);
+	public static class ConnectionContext extends ParserRuleContext {
+		public List<TerminalNode> INT() { return getTokens(GameMapParser.INT); }
+		public TerminalNode INT(int i) {
+			return getToken(GameMapParser.INT, i);
 		}
 		public TerminalNode NEWLINE() { return getToken(GameMapParser.NEWLINE, 0); }
-		public CommandContext(ParserRuleContext parent, int invokingState) {
+		public ConnectionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_command; }
+		@Override public int getRuleIndex() { return RULE_connection; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GameMapListener ) ((GameMapListener)listener).enterCommand(this);
+			if ( listener instanceof GameMapListener ) ((GameMapListener)listener).enterConnection(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GameMapListener ) ((GameMapListener)listener).exitCommand(this);
+			if ( listener instanceof GameMapListener ) ((GameMapListener)listener).exitConnection(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GameMapVisitor ) return ((GameMapVisitor<? extends T>)visitor).visitCommand(this);
+			if ( visitor instanceof GameMapVisitor ) return ((GameMapVisitor<? extends T>)visitor).visitConnection(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final CommandContext command() throws RecognitionException {
-		CommandContext _localctx = new CommandContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_command);
+	public final ConnectionContext connection() throws RecognitionException {
+		ConnectionContext _localctx = new ConnectionContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_connection);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
-			action();
-			setState(42);
+			setState(46);
+			match(INT);
+			setState(47);
+			match(T__1);
+			setState(48);
+			match(INT);
+			setState(49);
 			match(NEWLINE);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(GameMapParser.ID, 0); }
-		public ActionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_action; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GameMapListener ) ((GameMapListener)listener).enterAction(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GameMapListener ) ((GameMapListener)listener).exitAction(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GameMapVisitor ) return ((GameMapVisitor<? extends T>)visitor).visitAction(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ActionContext action() throws RecognitionException {
-		ActionContext _localctx = new ActionContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_action);
-		try {
-			setState(69);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case NEWLINE:
-				enterOuterAlt(_localctx, 1);
-				{
-				}
-				break;
-			case T__0:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(45);
-				match(T__0);
-				setState(46);
-				match(ID);
-				}
-				break;
-			case T__1:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(47);
-				match(T__1);
-				setState(48);
-				match(ID);
-				}
-				break;
-			case T__2:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(49);
-				match(T__2);
-				setState(50);
-				match(ID);
-				}
-				break;
-			case T__3:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(51);
-				match(T__3);
-				setState(52);
-				match(ID);
-				}
-				break;
-			case T__4:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(53);
-				match(T__4);
-				setState(54);
-				match(ID);
-				}
-				break;
-			case T__5:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(55);
-				match(T__5);
-				setState(56);
-				match(ID);
-				}
-				break;
-			case T__6:
-				enterOuterAlt(_localctx, 8);
-				{
-				setState(57);
-				match(T__6);
-				setState(58);
-				match(ID);
-				}
-				break;
-			case T__7:
-				enterOuterAlt(_localctx, 9);
-				{
-				setState(59);
-				match(T__7);
-				setState(60);
-				match(ID);
-				}
-				break;
-			case T__8:
-				enterOuterAlt(_localctx, 10);
-				{
-				setState(61);
-				match(T__8);
-				setState(62);
-				match(ID);
-				}
-				break;
-			case T__9:
-				enterOuterAlt(_localctx, 11);
-				{
-				setState(63);
-				match(T__9);
-				setState(64);
-				match(ID);
-				}
-				break;
-			case T__10:
-				enterOuterAlt(_localctx, 12);
-				{
-				setState(65);
-				match(T__10);
-				setState(66);
-				match(ID);
-				}
-				break;
-			case T__11:
-				enterOuterAlt(_localctx, 13);
-				{
-				setState(67);
-				match(T__11);
-				setState(68);
-				match(ID);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -571,53 +452,39 @@ public class GameMapParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0016H\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
-		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
-		"\u0005\u0007\u0005\u0001\u0000\u0005\u0000\u000e\b\u0000\n\u0000\f\u0000"+
-		"\u0011\t\u0000\u0001\u0000\u0003\u0000\u0014\b\u0000\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0004\u0001\u001a\b\u0001\u000b\u0001\f"+
-		"\u0001\u001b\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002"+
-		"\u0001\u0002\u0003\u0002$\b\u0002\u0001\u0003\u0001\u0003\u0001\u0003"+
-		"\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0003\u0005"+
-		"F\b\u0005\u0001\u0005\u0000\u0000\u0006\u0000\u0002\u0004\u0006\b\n\u0000"+
-		"\u0000R\u0000\u000f\u0001\u0000\u0000\u0000\u0002\u0015\u0001\u0000\u0000"+
-		"\u0000\u0004#\u0001\u0000\u0000\u0000\u0006%\u0001\u0000\u0000\u0000\b"+
-		")\u0001\u0000\u0000\u0000\nE\u0001\u0000\u0000\u0000\f\u000e\u0003\u0002"+
-		"\u0001\u0000\r\f\u0001\u0000\u0000\u0000\u000e\u0011\u0001\u0000\u0000"+
-		"\u0000\u000f\r\u0001\u0000\u0000\u0000\u000f\u0010\u0001\u0000\u0000\u0000"+
-		"\u0010\u0013\u0001\u0000\u0000\u0000\u0011\u000f\u0001\u0000\u0000\u0000"+
-		"\u0012\u0014\u0003\u0006\u0003\u0000\u0013\u0012\u0001\u0000\u0000\u0000"+
-		"\u0013\u0014\u0001\u0000\u0000\u0000\u0014\u0001\u0001\u0000\u0000\u0000"+
-		"\u0015\u0016\u0005\u000e\u0000\u0000\u0016\u0017\u0005\u0012\u0000\u0000"+
-		"\u0017\u0019\u0005\u0014\u0000\u0000\u0018\u001a\u0003\u0004\u0002\u0000"+
-		"\u0019\u0018\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000"+
-		"\u001b\u0019\u0001\u0000\u0000\u0000\u001b\u001c\u0001\u0000\u0000\u0000"+
-		"\u001c\u0003\u0001\u0000\u0000\u0000\u001d\u001e\u0005\u000f\u0000\u0000"+
-		"\u001e$\u0005\u0014\u0000\u0000\u001f \u0005\u0010\u0000\u0000 $\u0005"+
-		"\u0014\u0000\u0000!\"\u0005\u0011\u0000\u0000\"$\u0005\u0014\u0000\u0000"+
-		"#\u001d\u0001\u0000\u0000\u0000#\u001f\u0001\u0000\u0000\u0000#!\u0001"+
-		"\u0000\u0000\u0000$\u0005\u0001\u0000\u0000\u0000%&\u0005\r\u0000\u0000"+
-		"&\'\u0005\u0014\u0000\u0000\'(\u0003\u0006\u0003\u0000(\u0007\u0001\u0000"+
-		"\u0000\u0000)*\u0003\n\u0005\u0000*+\u0005\u0014\u0000\u0000+\t\u0001"+
-		"\u0000\u0000\u0000,F\u0001\u0000\u0000\u0000-.\u0005\u0001\u0000\u0000"+
-		".F\u0005\u0012\u0000\u0000/0\u0005\u0002\u0000\u00000F\u0005\u0012\u0000"+
-		"\u000012\u0005\u0003\u0000\u00002F\u0005\u0012\u0000\u000034\u0005\u0004"+
-		"\u0000\u00004F\u0005\u0012\u0000\u000056\u0005\u0005\u0000\u00006F\u0005"+
-		"\u0012\u0000\u000078\u0005\u0006\u0000\u00008F\u0005\u0012\u0000\u0000"+
-		"9:\u0005\u0007\u0000\u0000:F\u0005\u0012\u0000\u0000;<\u0005\b\u0000\u0000"+
-		"<F\u0005\u0012\u0000\u0000=>\u0005\t\u0000\u0000>F\u0005\u0012\u0000\u0000"+
-		"?@\u0005\n\u0000\u0000@F\u0005\u0012\u0000\u0000AB\u0005\u000b\u0000\u0000"+
-		"BF\u0005\u0012\u0000\u0000CD\u0005\f\u0000\u0000DF\u0005\u0012\u0000\u0000"+
-		"E,\u0001\u0000\u0000\u0000E-\u0001\u0000\u0000\u0000E/\u0001\u0000\u0000"+
-		"\u0000E1\u0001\u0000\u0000\u0000E3\u0001\u0000\u0000\u0000E5\u0001\u0000"+
-		"\u0000\u0000E7\u0001\u0000\u0000\u0000E9\u0001\u0000\u0000\u0000E;\u0001"+
-		"\u0000\u0000\u0000E=\u0001\u0000\u0000\u0000E?\u0001\u0000\u0000\u0000"+
-		"EA\u0001\u0000\u0000\u0000EC\u0001\u0000\u0000\u0000F\u000b\u0001\u0000"+
-		"\u0000\u0000\u0005\u000f\u0013\u001b#E";
+		"\u0004\u0001\r4\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0001"+
+		"\u0000\u0004\u0000\f\b\u0000\u000b\u0000\f\u0000\r\u0001\u0000\u0003\u0000"+
+		"\u0011\b\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0004\u0001\u0016\b"+
+		"\u0001\u000b\u0001\f\u0001\u0017\u0001\u0001\u0001\u0001\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0003\u0002&\b\u0002\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0004\u0003+\b\u0003\u000b\u0003\f\u0003,\u0001\u0004"+
+		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0000\u0000"+
+		"\u0005\u0000\u0002\u0004\u0006\b\u0000\u00006\u0000\u000b\u0001\u0000"+
+		"\u0000\u0000\u0002\u0012\u0001\u0000\u0000\u0000\u0004%\u0001\u0000\u0000"+
+		"\u0000\u0006\'\u0001\u0000\u0000\u0000\b.\u0001\u0000\u0000\u0000\n\f"+
+		"\u0003\u0002\u0001\u0000\u000b\n\u0001\u0000\u0000\u0000\f\r\u0001\u0000"+
+		"\u0000\u0000\r\u000b\u0001\u0000\u0000\u0000\r\u000e\u0001\u0000\u0000"+
+		"\u0000\u000e\u0010\u0001\u0000\u0000\u0000\u000f\u0011\u0003\u0006\u0003"+
+		"\u0000\u0010\u000f\u0001\u0000\u0000\u0000\u0010\u0011\u0001\u0000\u0000"+
+		"\u0000\u0011\u0001\u0001\u0000\u0000\u0000\u0012\u0013\u0005\u0003\u0000"+
+		"\u0000\u0013\u0015\u0005\n\u0000\u0000\u0014\u0016\u0003\u0004\u0002\u0000"+
+		"\u0015\u0014\u0001\u0000\u0000\u0000\u0016\u0017\u0001\u0000\u0000\u0000"+
+		"\u0017\u0015\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000\u0000\u0000"+
+		"\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001a\u0005\n\u0000\u0000\u001a"+
+		"\u0003\u0001\u0000\u0000\u0000\u001b\u001c\u0005\u0004\u0000\u0000\u001c"+
+		"&\u0005\n\u0000\u0000\u001d\u001e\u0005\u0005\u0000\u0000\u001e&\u0005"+
+		"\n\u0000\u0000\u001f \u0005\b\u0000\u0000 &\u0005\n\u0000\u0000!\"\u0005"+
+		"\u0006\u0000\u0000\"&\u0005\n\u0000\u0000#$\u0005\u0007\u0000\u0000$&"+
+		"\u0005\n\u0000\u0000%\u001b\u0001\u0000\u0000\u0000%\u001d\u0001\u0000"+
+		"\u0000\u0000%\u001f\u0001\u0000\u0000\u0000%!\u0001\u0000\u0000\u0000"+
+		"%#\u0001\u0000\u0000\u0000&\u0005\u0001\u0000\u0000\u0000\'(\u0005\u0001"+
+		"\u0000\u0000(*\u0005\n\u0000\u0000)+\u0003\b\u0004\u0000*)\u0001\u0000"+
+		"\u0000\u0000+,\u0001\u0000\u0000\u0000,*\u0001\u0000\u0000\u0000,-\u0001"+
+		"\u0000\u0000\u0000-\u0007\u0001\u0000\u0000\u0000./\u0005\f\u0000\u0000"+
+		"/0\u0005\u0002\u0000\u000001\u0005\f\u0000\u000012\u0005\n\u0000\u0000"+
+		"2\t\u0001\u0000\u0000\u0000\u0005\r\u0010\u0017%,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

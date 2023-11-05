@@ -1,5 +1,13 @@
 package gameplay;
 
+import gamemap_grammar.GameMapLexer;
+import gamemap_grammar.GameMapParser;
+import gamemap_grammar.MyGameMapVisitor;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.*;
+
+import java.nio.file.Paths;
+
 public class ReadWorldDataFile
 {
 
@@ -12,12 +20,22 @@ public class ReadWorldDataFile
     {
         //read a basic map from a text file and
         //use antlr to parse and construct a World object.
-        return null;
-    }
-
-    public static World oneRoomWorld()
-    {
-        Room room = new Room();
-        return new World(room);
+        try {
+            World world = new World();
+            String filePath = Paths.get(System.getProperty("user.dir"), "src", "GameMap.txt").toString();
+            ANTLRFileStream input = new ANTLRFileStream(filePath);
+            GameMapLexer lexer = new GameMapLexer(input);
+            CommonTokenStream stream = new CommonTokenStream(lexer);
+            GameMapParser parser = new GameMapParser(stream);
+            ParseTree tree = parser.gamemap();
+            MyGameMapVisitor visitor = new MyGameMapVisitor(world);
+            visitor.visit(tree);
+            world.currentRoom = world.rooms.get(0);
+            return world;
+        }
+        catch (Exception ex) {
+            System.out.println("Could not read file because of " + ex);
+            return null;
+        }
     }
 }

@@ -65,25 +65,13 @@ public class GameMapBaseListener implements GameMapListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCommand(GameMapParser.CommandContext ctx) { }
+	@Override public void enterConnection(GameMapParser.ConnectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCommand(GameMapParser.CommandContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAction(GameMapParser.ActionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAction(GameMapParser.ActionContext ctx) { }
+	@Override public void exitConnection(GameMapParser.ConnectionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -46,12 +46,5 @@ public class GameMapBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCommand(GameMapParser.CommandContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitAction(GameMapParser.ActionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConnection(GameMapParser.ConnectionContext ctx) { return visitChildren(ctx); }
 }

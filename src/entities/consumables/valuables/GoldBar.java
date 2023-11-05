@@ -1,7 +1,7 @@
 package entities.consumables.valuables;
 
 public class GoldBar extends Valuable{
-    public GoldBar() {
-        super("GoldBar", 10);
+    public GoldBar(String description) {
+        super(description, 10);
     }
 }

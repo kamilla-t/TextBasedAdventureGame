@@ -1,7 +1,7 @@
 package entities.wieldables;
 
 public class Sword extends Wieldable{
-    public Sword() {
-        super("Sword", 10, 15);
+    public Sword(String description) {
+        super(description, 10, 15);
     }
 }

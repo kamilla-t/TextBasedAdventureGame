@@ -1,7 +1,7 @@
 package entities.consumables.valuables;
 
 public class Mobile extends Valuable{
-    public Mobile() {
-        super("Mobile", 0);
+    public Mobile(String description) {
+        super(description, 0);
     }
 }

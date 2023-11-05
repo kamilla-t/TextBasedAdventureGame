@@ -28,12 +28,12 @@ public abstract class Entity {
         return new Random().nextInt(y-x) + x;
     }
 
-    public boolean compareID(String id) {
+    public boolean compare(String description) {
         // Case-insensitive string comparison
-        return Objects.equals(this.id.toLowerCase(), id.toLowerCase());
+        return Objects.equals(this.description.toLowerCase(), description.toLowerCase());
     }
 
     public String toString() {
-        return this.getId();
+        return this.getId() + ": " + this.getDescription();
     }
 }

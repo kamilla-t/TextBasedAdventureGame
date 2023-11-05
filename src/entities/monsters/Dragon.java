@@ -1,7 +1,7 @@
 package entities.monsters;
 
 public class Dragon extends Monster {
-    public Dragon() {
-        super("Dragon", 100, 5, 20);
+    public Dragon(String description) {
+        super(description, 100, 5, 20);
     }
 }

@@ -1,28 +1,30 @@
 grammar GameMap;
 // Parser rules
-gamemap : room* connections?;
-room: ROOMID NEWLINE attr*;
+gamemap: room+ connections?; //RoomMap
+room: ROOMID NEWLINE attr+ NEWLINE;
+//Room done, new line,0 or more attributes
 
-attr : MONSTER NEWLINE
-     | VALUABLES NEWLINE
-     | FOOD NEWLINE
+attr : MONSTER NEWLINE //Monster
+     | VALUABLES NEWLINE //Valuable
+     | FOOD NEWLINE //Food
+     | WIELDABLE NEWLINE //WIELDABLE
+     | OPENABLE NEWLINE //OPENABLE
      ;
 
-connections: 'Connections' NEWLINE connection+;
+connections: 'Connections' NEWLINE connection+; //ConnectionList
 
-connection: INT '-' INT NEWLINE;
+connection: INT '-' INT NEWLINE; //RoomConnection
 
-ROOMID: 'Room' ',' ID ',' INT; //Room - description, pickupsInRoom, isFinalRoom, connectedRooms, monsters
-MONSTER: ID ',' INT ',' INT ',' INT; //Monster - description, currentHealthPoints, probability, damage
-VALUABLES: ID ',' INT; //Valuables - description, value
-FOOD: ID ',' INT; // Food - description, healthPoints
+ROOMID: 'R:' INT ',' BOOL;
+MONSTER: 'M:' ID ',' ID; //Monster - description, currentHealthPoints, probability, damage
+VALUABLES: 'V:' ID ',' ID; //Valuables - description, value
+WIELDABLE: 'W:' ID ',' ID; //
+OPENABLE: 'O:' ID ',' ID ',' BOOL ',' VALUABLES; //
+FOOD: 'F:' ID ',' ID; // Food - description, healthPoints
 
 // Lexer rules
+WHITESPACE: [ \t]+ -> skip; // Skip spaces and tabs
+NEWLINE: '\r'? '\n' ; // return newlines to parser (is end-statement signal)
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
-WS: [ \t\r\n]+ -> skip; // Skip spaces and tabs
-NEWLINE:'\r'? '\n' ; // Skip newlines
 INT: ('0' | [1-9] [0-9]*);
-FLOAT: ('0' | [1-9] [0-9]*) '.' [0-9]+;
-
-//antlr4 GameMap.g4
-
+BOOL: ('true' | 'false');

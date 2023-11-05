@@ -48,23 +48,13 @@ public interface GameMapListener extends ParseTreeListener {
 	 */
 	void exitConnections(GameMapParser.ConnectionsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GameMapParser#command}.
+	 * Enter a parse tree produced by {@link GameMapParser#connection}.
 	 * @param ctx the parse tree
 	 */
-	void enterCommand(GameMapParser.CommandContext ctx);
+	void enterConnection(GameMapParser.ConnectionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GameMapParser#command}.
+	 * Exit a parse tree produced by {@link GameMapParser#connection}.
 	 * @param ctx the parse tree
 	 */
-	void exitCommand(GameMapParser.CommandContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GameMapParser#action}.
-	 * @param ctx the parse tree
-	 */
-	void enterAction(GameMapParser.ActionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GameMapParser#action}.
-	 * @param ctx the parse tree
-	 */
-	void exitAction(GameMapParser.ActionContext ctx);
+	void exitConnection(GameMapParser.ConnectionContext ctx);
 }

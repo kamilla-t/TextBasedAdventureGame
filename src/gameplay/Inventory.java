@@ -42,7 +42,7 @@ public class Inventory
 	{
 		for(Pickup p : this.items)
 		{
-			if (p!=null && p.compareID(id))
+			if (p!=null && p.compare(id))
 			{
 				return p;
 			}

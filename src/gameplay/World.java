@@ -1,6 +1,5 @@
-
 package gameplay;
-import java.io.Console;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import entities.Pickup;
@@ -9,47 +8,53 @@ import entities.consumables.valuables.Valuable;
 import entities.monsters.Monster;
 import entities.openables.Openable;
 import entities.wieldables.Wieldable;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CharStreams;
-import gamemap_grammar.*;
-import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.CommonTokenStream;
 import playercommand_grammar.*;
 
 public class World {
     public enum PlayMode {battle, explore;}
 
     Player player;
-    Room startingRoom;
+    Room currentRoom;
+    Monster currentMonster;
     PlayMode mode;
-    Room room;
+    ArrayList<Room> rooms;
+    Boolean gameInProgress;
 
     public World() {
+        rooms = new ArrayList<>();
+    }
 
+    public void onEnterRoom() {
+        System.out.println("onEnterRoom method is called");
+
+        if (this.currentRoom == null) {
+            System.out.println("No room is currently set. Please set the initial room");
+            return;
+        }
+
+        System.out.println(this.currentRoom.GetRoomContent());
     }
 
     public World(Room room) {
-        this.room = room;
+        this.currentRoom = room;
     }
-
-    public void onEnterRoom()
-	{
-	}
 
     public void play(Player player)
     {
         this.player = player;
-        System.out.println("Welcome player " + player);
-
-        System.out.println(player);
+        System.out.println("Welcome player " + player.toString());
         this.onEnterRoom();
+        this.gameInProgress = true;
 
-        boolean gameInProgress = true;
-        while (gameInProgress) {
+        while (this.gameInProgress) {
             switch (this.mode) {
+                //explore mode
                 case explore:
                     processExploreUserInput();
                     break;
+                //battle mode
                 case battle:
                     processBattleUserInput();
                     break;
@@ -60,37 +65,120 @@ public class World {
     //Scanner
     private void processExploreUserInput(){
         if (this.player.getCurrentHealthPoints() <= 0) {
-            System.out.println("Game over");
+            System.out.println("You lose!");
+            this.gameInProgress = false;
+            return;
+        }
+
+        if (this.currentRoom.isFinalRoom && this.currentRoom.monsters.size() == 0) {
+            System.out.println("You won!");
+            this.gameInProgress = false;
             return;
         }
 
         Scanner myObj = new Scanner(System.in);
         String input = myObj.nextLine();
 
-        PlayerCommandLexer lexer = new PlayerCommandLexer(CharStreams.fromString(input));
-        Token token = lexer.nextToken();
+        try {
+            PlayerCommandLexer lexer = new PlayerCommandLexer(CharStreams.fromString(input));
+            CommonTokenStream stream = new CommonTokenStream(lexer);
+            PlayerCommandParser parser = new PlayerCommandParser(stream);
+            PlayerCommandParser.CommandContext tree = parser.command();
 
-        switch (token.getText()) {
-            case "pickup":
-                this.pickup("Jewel");
-                break;
-            case "battle":
-                break;
-            case "admire":
-                this.admire("GoldBars");
-                break;
-            default:
-                break;
+            var commandNodes = tree.action().children;
+            String action = commandNodes.get(0).toString();
+            String id = "";
+            if (commandNodes.size() > 1) {
+                id = commandNodes.get(1).toString();
+            }
 
+            switch (action) {
+                case "door":
+                    this.door(id);
+                    break;
+                case "pickup":
+                    this.pickup(id);
+                    break;
+                case "describe":
+                    this.describe();
+                    break;
+                case "admire":
+                    this.admire(id);
+                    break;
+                case "eat":
+                    this.eat(id);
+                    break;
+                case "stats":
+                    this.stats();
+                    break;
+                case "wield":
+                    this.wield(id);
+                    break;
+                case "open":
+                    this.open(id);
+                    break;
+                case "help":
+                    this.help();
+                    break;
+                case "battle":
+                    this.battle(id);
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception ex) {
+            System.out.println("Something went wrong " + ex.toString() + ". Use help.");
+            return;
         }
     }
     private void processBattleUserInput(){
         if (this.player.getCurrentHealthPoints() <= 0) {
-            System.out.println("Game over");
+            System.out.println("You lose!");
+            this.gameInProgress = false;
             return;
         }
 
-        // process input
+        if (this.currentRoom.isFinalRoom && this.currentRoom.monsters.size() == 0) {
+            System.out.println("You won!");
+            this.gameInProgress = false;
+            return;
+        }
+
+        Scanner myObj = new Scanner(System.in);
+        String input = myObj.nextLine();
+
+        try {
+            PlayerCommandLexer lexer = new PlayerCommandLexer(CharStreams.fromString(input));
+            CommonTokenStream stream = new CommonTokenStream(lexer);
+            PlayerCommandParser parser = new PlayerCommandParser(stream);
+            PlayerCommandParser.CommandContext tree = parser.command();
+
+            var commandNodes = tree.action().children;
+            String action = commandNodes.get(0).toString();
+            String id = "";
+            if (commandNodes.size() > 1) {
+                id = commandNodes.get(1).toString();
+            }
+
+            switch (action) {
+                case "attack":
+                    this.attack();
+                    break;
+                case "help":
+                    this.help();
+                    break;
+                case "wield":
+                    this.wield(id);
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception ex) {
+            System.out.println("Something went wrong " + ex.toString() + ". Use help.");
+            return;
+        }
     }
 
     private void pickup(String itemId) {
@@ -100,13 +188,15 @@ public class World {
         }
 
         // Pickup from room
-        Pickup foundItem = this.room.pickupsInRoom.select(itemId);
+        Pickup foundItem = this.currentRoom.pickupsInRoom.select(itemId);
         if (foundItem == null) {
+            System.out.println("Item not found: " + itemId + ".");
             return;
         }
         // Put item to player
-        this.room.pickupsInRoom.remove(foundItem);
+        this.currentRoom.pickupsInRoom.remove(foundItem);
         this.player.inventory.add(foundItem);
+        System.out.println(this.currentRoom.GetRoomContent());
     }
 
     private void admire(String itemId) {
@@ -122,6 +212,8 @@ public class World {
         }
         if (foundItem instanceof Valuable) {
             this.player.admire((Valuable)foundItem);
+            System.out.println("You admired: " + foundItem.toString());
+            System.out.println("Your confidence points: " + this.player.getConfidencePoints());
         }
     }
 
@@ -132,13 +224,13 @@ public class World {
             return;
         }
 
-        for (Monster monster: this.room.monsters) {
+        for (Monster monster: this.currentRoom.monsters) {
             System.out.println(monster.getDescription());
         }
-        for (Pickup pickup: this.room.pickupsInRoom.getItems()) {
+        for (Pickup pickup: this.currentRoom.pickupsInRoom.getItems()) {
             System.out.println(pickup.getDescription());
         }
-        for (Room room1: this.room.connectedRooms) {
+        for (Room room1: this.currentRoom.connectedRooms) {
             System.out.println(room1.getDescription());
         }
     }
@@ -150,9 +242,15 @@ public class World {
             return;
         }
 
-        for (Room room1: this.room.connectedRooms) {
-            if (room1.compareID(roomId)) {
-                this.room = room1;
+        if (this.currentRoom.monsters.size() > 0) {
+            System.out.println("Monsters won't let you escape.");
+            return;
+        }
+
+        for (Room room: this.currentRoom.connectedRooms) {
+            if (room.compare(roomId)) {
+                this.currentRoom = room;
+                System.out.println(this.currentRoom.GetRoomContent());
                 return;
             }
         }
@@ -167,12 +265,13 @@ public class World {
         }
 
         for(Pickup pickup : this.player.inventory.getItems()) {
-            if (pickup.compareID(foodId)) {
+            if (pickup.compare(foodId)) {
                 if (pickup instanceof Food) {
                     this.player.setCurrentHealthPoints(
                             this.player.getCurrentHealthPoints() +
                                     ((Food) pickup).getHealthPoints());
                     this.player.inventory.remove(pickup);
+                    System.out.println("You ate " + pickup.toString());
                     return;
                 }
                 System.out.println("pickup " + foodId + " is not food");
@@ -198,11 +297,12 @@ public class World {
     }
 
     //wield weapon
-    private void wieldWeapon(String weaponId) {
+    private void wield(String weaponId) {
         for (Pickup pickup: this.player.inventory.getItems()) {
-            if (pickup.compareID(weaponId)) {
+            if (pickup.compare(weaponId)) {
                 if (pickup instanceof Wieldable) {
                     this.player.setWeapon((Wieldable) pickup);
+                    System.out.println("You equipped " + pickup.toString());
                     return;
                 }
                 System.out.println("You cannot wear this item " + weaponId);
@@ -213,17 +313,18 @@ public class World {
     }
 
     //open chest
-    private void openChest(String chestId){
+    private void open(String chestId){
         if (this.mode == PlayMode.battle) {
             System.out.println("Invalid for battle mode.");
             return;
         }
 
-        for (Pickup pickup: this.room.pickupsInRoom.getItems()) {
-            if (pickup.compareID(chestId)) {
-                if (pickup instanceof  Openable) {
+        for (Pickup pickup: this.currentRoom.pickupsInRoom.getItems()) {
+            if (pickup.compare(chestId)) {
+                if (pickup instanceof Openable) {
                     this.player.inventory.add(((Openable) pickup).getContents());
-                    this.room.pickupsInRoom.remove(pickup);
+                    this.currentRoom.pickupsInRoom.remove(pickup);
+                    System.out.println(this.currentRoom.GetRoomContent());
                     return;
                 }
                 System.out.println("You cannot open " + chestId);
@@ -250,30 +351,58 @@ public class World {
         System.out.println("[attack]: attack the monster using wielded weapon");
     }
 
+    private void battle(String monsterId) {
+        if (this.mode == PlayMode.battle) {
+            System.out.println("Invalid for battle mode.");
+            return;
+        }
+        for (Monster monster: this.currentRoom.monsters) {
+            if (monster.compare(monsterId)) {
+                this.currentMonster = monster;
+                this.mode = PlayMode.battle;
+                System.out.println("Battle started!");
+                return;
+            }
+        }
+        System.out.println("Monster not found.");
+    }
+
     // battle
     //attack command
-    private void attack(String monsterId) {
+    private void attack() {
         if (this.mode == PlayMode.explore) {
             System.out.println("Invalid for explore mode.");
             return;
         }
 
-        for (Monster monster: this.room.monsters) {
-            if (monster.compareID(monsterId)) {
-                monster.defendAttack(this.player);
+        this.currentMonster.defendAttack(this.player);
+        System.out.println("Monster HP: " + this.currentMonster.getCurrentHealthPoints());
 
-                // counter-attack
-                if (monster.getCurrentHealthPoints() > 0) {
-                    this.player.defendAttack(monster);
+        // counter-attack
+        if (this.currentMonster.getCurrentHealthPoints() > 0) {
+            this.player.defendAttack(this.currentMonster);
+            System.out.println("Your HP: " + this.player.getCurrentHealthPoints());
+        }
+        else {
+            this.currentRoom.DeleteMonster(this.currentMonster);
+            this.mode = PlayMode.explore;
+            this.currentMonster = null;
+            System.out.println("Monster is dead.");
+            System.out.println(this.currentRoom.GetRoomContent());
+        }
+    }
 
-                    if (this.player.getCurrentHealthPoints() <= 0) {
-                        System.out.println("Game over");
-                        return;
-                    }
-                }
-                return;
+    public void AddRoom(Room room) {
+        this.rooms.add(room);
+    }
+
+    public Room GetRoomByDescription(String description) {
+        for (Room room: this.rooms) {
+            String desc = room.getDescription();
+            if (desc.equals(description)) {
+                return room;
             }
         }
-        System.out.println("Monster " + monsterId + " is not found");
+        return null;
     }
 }

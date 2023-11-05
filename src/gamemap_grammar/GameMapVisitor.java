@@ -35,15 +35,9 @@ public interface GameMapVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConnections(GameMapParser.ConnectionsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GameMapParser#command}.
+	 * Visit a parse tree produced by {@link GameMapParser#connection}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCommand(GameMapParser.CommandContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GameMapParser#action}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAction(GameMapParser.ActionContext ctx);
+	T visitConnection(GameMapParser.ConnectionContext ctx);
 }

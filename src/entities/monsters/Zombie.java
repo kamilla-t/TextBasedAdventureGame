@@ -1,7 +1,7 @@
 package entities.monsters;
 
 public class Zombie extends Monster{
-    public Zombie(String description, int currentHealthPoints, int probability, int damage) {
-        super("Zombie", 10, 50, 2);
+    public Zombie(String description) {
+        super(description, 10, 100, 2);
     }
 }

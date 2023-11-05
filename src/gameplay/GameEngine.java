@@ -1,22 +1,24 @@
 package gameplay;
-
-import gamemap_grammar.GameMapLexer;
-import gamemap_grammar.GameMapParser;
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.CharStreams;
+import java.util.Scanner;
 
 public class GameEngine
 {
     public static void main(String[] args)
     {
-        //read the World object instance from a text file or literal
-        World world = ReadWorldDataFile.oneRoomWorld();
-        world.mode = World.PlayMode.explore;
-        Player playerOne = new Player("Player", "Kamilla",100,50);
-        world.play(playerOne);
+        //Read the game map from the provides string
+        World world = ReadWorldDataFile.basicWorld();
+
+        if (world != null) {
+            world.mode = World.PlayMode.explore;
+            System.out.println("Welcome to the game");
+            System.out.println("Please enter your character name: ");
+            Scanner scanner = new Scanner(System.in);
+            String playerName = scanner.nextLine();
+            Player playerOne = new Player(playerName, playerName, 100, 50);
+            world.play(playerOne);
+        }
+        else {
+            System.out.println("Failed to load the game map");
+        }
     }
-
-
-
 }

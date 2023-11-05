@@ -1,0 +1,22 @@
+R:1,false
+M:Dragon,Dragon1
+V:Coin,Coin1
+F:Bread,Bread1
+W:Axe,Axe1
+O:TreasureChest,Chest1,false,V:Coin,Coin2
+
+R:2,false
+M:Zombie,Zombie1
+V:GoldBar,GoldBar1
+F:Mead,Mead1
+
+R:3,true
+M:Ogre,Ogre1
+V:Jewel,Jewel1
+F:RoastBoar,RoastBoar1
+O:WarChest,Chest2,true,V:GoldBar,GoldBar2
+
+Connections
+1 - 2
+1 - 3
+2 - 3

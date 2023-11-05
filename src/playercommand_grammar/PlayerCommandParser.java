@@ -18,7 +18,7 @@ public class PlayerCommandParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, ID=13, NEWLINE=14;
+		T__9=10, T__10=11, ID=12, NEWLINE=13, WHITESPACE=14;
 	public static final int
 		RULE_command = 0, RULE_action = 1;
 	private static String[] makeRuleNames() {
@@ -30,16 +30,15 @@ public class PlayerCommandParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'pickup '", "'door n'", "'pickup item'", "'describe'", "'admire valuable'", 
-			"'eat food'", "'stats'", "'wield weapon'", "'wield fistsoffury'", "'open chest'", 
-			"'help'", "'attack'"
+			null, "'door'", "'pickup'", "'describe'", "'admire'", "'eat'", "'stats'", 
+			"'wield'", "'open'", "'help'", "'attack'", "'battle'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "ID", "NEWLINE"
+			"ID", "NEWLINE", "WHITESPACE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -98,7 +97,7 @@ public class PlayerCommandParser extends Parser {
 		public ActionContext action() {
 			return getRuleContext(ActionContext.class,0);
 		}
-		public TerminalNode NEWLINE() { return getToken(PlayerCommandParser.NEWLINE, 0); }
+		public TerminalNode EOF() { return getToken(PlayerCommandParser.EOF, 0); }
 		public CommandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -127,7 +126,7 @@ public class PlayerCommandParser extends Parser {
 			setState(4);
 			action();
 			setState(5);
-			match(NEWLINE);
+			match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -167,10 +166,10 @@ public class PlayerCommandParser extends Parser {
 		ActionContext _localctx = new ActionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_action);
 		try {
-			setState(32);
+			setState(26);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case NEWLINE:
+			case EOF:
 				enterOuterAlt(_localctx, 1);
 				{
 				}
@@ -198,88 +197,71 @@ public class PlayerCommandParser extends Parser {
 				{
 				setState(12);
 				match(T__2);
-				setState(13);
-				match(ID);
 				}
 				break;
 			case T__3:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(14);
+				setState(13);
 				match(T__3);
-				setState(15);
+				setState(14);
 				match(ID);
 				}
 				break;
 			case T__4:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(16);
+				setState(15);
 				match(T__4);
-				setState(17);
+				setState(16);
 				match(ID);
 				}
 				break;
 			case T__5:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(18);
+				setState(17);
 				match(T__5);
-				setState(19);
-				match(ID);
 				}
 				break;
 			case T__6:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(20);
+				setState(18);
 				match(T__6);
-				setState(21);
+				setState(19);
 				match(ID);
 				}
 				break;
 			case T__7:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(22);
+				setState(20);
 				match(T__7);
-				setState(23);
+				setState(21);
 				match(ID);
 				}
 				break;
 			case T__8:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(24);
+				setState(22);
 				match(T__8);
-				setState(25);
-				match(ID);
 				}
 				break;
 			case T__9:
 				enterOuterAlt(_localctx, 11);
 				{
-				setState(26);
+				setState(23);
 				match(T__9);
-				setState(27);
-				match(ID);
 				}
 				break;
 			case T__10:
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(28);
+				setState(24);
 				match(T__10);
-				setState(29);
-				match(ID);
-				}
-				break;
-			case T__11:
-				enterOuterAlt(_localctx, 13);
-				{
-				setState(30);
-				match(T__11);
-				setState(31);
+				setState(25);
 				match(ID);
 				}
 				break;
@@ -299,32 +281,30 @@ public class PlayerCommandParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u000e#\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0004\u0001\u000e\u001d\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001!\b\u0001\u0001"+
-		"\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000,\u0000\u0004\u0001\u0000"+
-		"\u0000\u0000\u0002 \u0001\u0000\u0000\u0000\u0004\u0005\u0003\u0002\u0001"+
-		"\u0000\u0005\u0006\u0005\u000e\u0000\u0000\u0006\u0001\u0001\u0000\u0000"+
-		"\u0000\u0007!\u0001\u0000\u0000\u0000\b\t\u0005\u0001\u0000\u0000\t!\u0005"+
-		"\r\u0000\u0000\n\u000b\u0005\u0002\u0000\u0000\u000b!\u0005\r\u0000\u0000"+
-		"\f\r\u0005\u0003\u0000\u0000\r!\u0005\r\u0000\u0000\u000e\u000f\u0005"+
-		"\u0004\u0000\u0000\u000f!\u0005\r\u0000\u0000\u0010\u0011\u0005\u0005"+
-		"\u0000\u0000\u0011!\u0005\r\u0000\u0000\u0012\u0013\u0005\u0006\u0000"+
-		"\u0000\u0013!\u0005\r\u0000\u0000\u0014\u0015\u0005\u0007\u0000\u0000"+
-		"\u0015!\u0005\r\u0000\u0000\u0016\u0017\u0005\b\u0000\u0000\u0017!\u0005"+
-		"\r\u0000\u0000\u0018\u0019\u0005\t\u0000\u0000\u0019!\u0005\r\u0000\u0000"+
-		"\u001a\u001b\u0005\n\u0000\u0000\u001b!\u0005\r\u0000\u0000\u001c\u001d"+
-		"\u0005\u000b\u0000\u0000\u001d!\u0005\r\u0000\u0000\u001e\u001f\u0005"+
-		"\f\u0000\u0000\u001f!\u0005\r\u0000\u0000 \u0007\u0001\u0000\u0000\u0000"+
-		" \b\u0001\u0000\u0000\u0000 \n\u0001\u0000\u0000\u0000 \f\u0001\u0000"+
-		"\u0000\u0000 \u000e\u0001\u0000\u0000\u0000 \u0010\u0001\u0000\u0000\u0000"+
-		" \u0012\u0001\u0000\u0000\u0000 \u0014\u0001\u0000\u0000\u0000 \u0016"+
-		"\u0001\u0000\u0000\u0000 \u0018\u0001\u0000\u0000\u0000 \u001a\u0001\u0000"+
-		"\u0000\u0000 \u001c\u0001\u0000\u0000\u0000 \u001e\u0001\u0000\u0000\u0000"+
-		"!\u0003\u0001\u0000\u0000\u0000\u0001 ";
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u001b\b\u0001"+
+		"\u0001\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000%\u0000\u0004\u0001"+
+		"\u0000\u0000\u0000\u0002\u001a\u0001\u0000\u0000\u0000\u0004\u0005\u0003"+
+		"\u0002\u0001\u0000\u0005\u0006\u0005\u0000\u0000\u0001\u0006\u0001\u0001"+
+		"\u0000\u0000\u0000\u0007\u001b\u0001\u0000\u0000\u0000\b\t\u0005\u0001"+
+		"\u0000\u0000\t\u001b\u0005\f\u0000\u0000\n\u000b\u0005\u0002\u0000\u0000"+
+		"\u000b\u001b\u0005\f\u0000\u0000\f\u001b\u0005\u0003\u0000\u0000\r\u000e"+
+		"\u0005\u0004\u0000\u0000\u000e\u001b\u0005\f\u0000\u0000\u000f\u0010\u0005"+
+		"\u0005\u0000\u0000\u0010\u001b\u0005\f\u0000\u0000\u0011\u001b\u0005\u0006"+
+		"\u0000\u0000\u0012\u0013\u0005\u0007\u0000\u0000\u0013\u001b\u0005\f\u0000"+
+		"\u0000\u0014\u0015\u0005\b\u0000\u0000\u0015\u001b\u0005\f\u0000\u0000"+
+		"\u0016\u001b\u0005\t\u0000\u0000\u0017\u001b\u0005\n\u0000\u0000\u0018"+
+		"\u0019\u0005\u000b\u0000\u0000\u0019\u001b\u0005\f\u0000\u0000\u001a\u0007"+
+		"\u0001\u0000\u0000\u0000\u001a\b\u0001\u0000\u0000\u0000\u001a\n\u0001"+
+		"\u0000\u0000\u0000\u001a\f\u0001\u0000\u0000\u0000\u001a\r\u0001\u0000"+
+		"\u0000\u0000\u001a\u000f\u0001\u0000\u0000\u0000\u001a\u0011\u0001\u0000"+
+		"\u0000\u0000\u001a\u0012\u0001\u0000\u0000\u0000\u001a\u0014\u0001\u0000"+
+		"\u0000\u0000\u001a\u0016\u0001\u0000\u0000\u0000\u001a\u0017\u0001\u0000"+
+		"\u0000\u0000\u001a\u0018\u0001\u0000\u0000\u0000\u001b\u0003\u0001\u0000"+
+		"\u0000\u0000\u0001\u001a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

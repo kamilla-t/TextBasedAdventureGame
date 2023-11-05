@@ -3,6 +3,7 @@ package gameplay;
 import entities.Character;
 import entities.Pickup;
 import entities.consumables.valuables.Valuable;
+import entities.wieldables.FistsOfFury;
 import entities.wieldables.Wieldable;
 
 public class Player extends Character
@@ -17,6 +18,11 @@ public class Player extends Character
         super(description, currentHealthPoints);
         this.name = name;
         this.confidencePoints = confidencePoints;
+        this.inventory = new Inventory();
+
+        Wieldable defaultWeapon = new FistsOfFury("FistsOfFury");
+        this.inventory.add(defaultWeapon);
+        this.weapon = defaultWeapon;
     }
 
     public String getName(){

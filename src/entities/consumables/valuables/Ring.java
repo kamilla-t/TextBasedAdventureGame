@@ -1,7 +1,7 @@
 package entities.consumables.valuables;
 
 public class Ring extends Valuable{
-    public Ring() {
-        super("Ring", 5);
+    public Ring(String description) {
+        super(description, 5);
     }
 }

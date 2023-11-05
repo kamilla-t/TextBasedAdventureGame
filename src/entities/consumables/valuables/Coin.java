@@ -1,7 +1,7 @@
 package entities.consumables.valuables;
 
 public class Coin extends Valuable{
-    public Coin() {
-        super("Coin", 1);
+    public Coin(String description) {
+        super(description, 1);
     }
 }
